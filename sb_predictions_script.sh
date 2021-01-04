@@ -4,7 +4,10 @@
 
 touch sb_dummy_predictions.txt
 
-# Log a prediction
+# Loop over fixtures (306)
+# Loop over players (4)
+# Generate random scores between 0 and 5
+# Write to text-file
 
 for i in {573164..573469}
 do
