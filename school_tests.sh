@@ -3,6 +3,9 @@
 # Create a file
 touch sb_dummy_school_tests.txt
 
+# Delete previous data
+> sb_dummy_school_tests.txt
+
 shuffle() {
   local i tmp size max rand
 
@@ -23,7 +26,7 @@ shuffle() {
 generateDate() {
   local time=$(( ( RANDOM % 7 )  + 9 ))
   local  day=$1
-  echo "new Date(new Date(new Date().setDate(new Date().getDate() - $day)).setHours($time))"
+  echo "new Date(new Date(new Date().setHours($time)).setDate(-$day))"
 }
 
 # Create an array with numbers 1 to 5
