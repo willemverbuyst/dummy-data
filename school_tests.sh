@@ -20,6 +20,12 @@ shuffle() {
   done
 }
 
+generateDate() {
+  local time=$(( ( RANDOM % 7 )  + 9 ))
+  local  day=$1
+  echo "new Date(new Date(new Date().setDate(new Date().getDate() - $day)).setHours($time))"
+}
+
 # Create an array with numbers 1 to 5
 array=( $(seq 5) )
 
@@ -27,6 +33,8 @@ array=( $(seq 5) )
 # Loop over students (3)
 # Loop 10 times over date, today - 1, 2,... 10
 # Generate random scores for answer, 0 or 1
+# Shuffle the array
+# Generate the dates with random hours between 9 and 16
 # Write to text-file
 
 for i in {1..3}
@@ -36,6 +44,7 @@ do
     for k in {1..10}
     do
       shuffle
+      dateAndTime=$(generateDate $k)
       echo "{
   question1: ${array[0]}, 
   question2: ${array[1]}, 
@@ -43,8 +52,8 @@ do
   answer1: $(($RANDOM%2)),
   answer2: $(($RANDOM%2)),
   answer3: $(($RANDOM%2)),
-  createdAt: new Date(new Date().setDate(new Date().getDate() - $k)),
-  updatedAt: new Date(new Date().setDate(new Date().getDate() - $k)),
+  createdAt: $dateAndTime,
+  updatedAt: $dateAndTime,
   subjectId: $j,
   studentId: $i,
 }," >> sb_dummy_school_tests.txt
