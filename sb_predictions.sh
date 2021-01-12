@@ -1,8 +1,10 @@
 #!/bin/bash
 
 # Create a file
-
 touch sb_dummy_predictions.txt
+
+# Delete previous data
+> sb_dummy_predictions.txt
 
 # Loop over fixtures (306)
 # Loop over players (4)

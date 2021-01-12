@@ -1,10 +1,10 @@
 #!/bin/bash
 
 # Create a file
-touch sb_dummy_school_tests.txt
+touch db_dummy_school_tests.txt
 
 # Delete previous data
-> sb_dummy_school_tests.txt
+> db_dummy_school_tests.txt
 
 shuffle() {
   local i tmp size max rand
@@ -59,7 +59,7 @@ do
   updatedAt: $dateAndTime,
   subjectId: $j,
   studentId: $i,
-}," >> sb_dummy_school_tests.txt
+}," >> db_dummy_school_tests.txt
     done
   done
 done
