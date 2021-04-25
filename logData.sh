@@ -1,21 +1,31 @@
 #!/bin/bash
 
 # Create a file
-# touch logData.js
+touch logData.js
 
 # Delete previous data
 > logData.js
 
-
+# Get start of route
 function splitStringFrom () {
   echo $1
 }
 
+# Get end of route
 function splitStringTo () {
   echo $3
 }
 
-# arr_csv=() 
+# Drop the hidden return
+# Calculate duration
+function parseDuration () {
+  stripped=$(echo $1|tr -d '\t\r\n')
+  IFS=':' read hrs min <<< "$stripped"
+  echo $(($hrs * 60 + $min))
+}
+
+# Loop through csv and build js-objects
+arr_csv=() 
 while IFS="|" read -r rec_column1 rec_column2 rec_column3 rec_column4 rec_column5 rec_column6
 do
   if [[ $rec_column3 == "home" ]] || [[ $rec_column3 == "day off" ]]
@@ -28,7 +38,7 @@ do
   else 
     arr_csv+=("{
   date: '$rec_column2', 
-  durationTrip: '$rec_column6', 
+  durationTrip: $(parseDuration $rec_column6), 
   meansOfTransport: '$rec_column3', 
   routeTripFrom: '$(splitStringFrom $rec_column4)',
   routeTripTo: '$(splitStringTo $rec_column4)',
@@ -38,9 +48,10 @@ do
   fi
 done < TEST_csvLog.txt
 
+# Start writing js-file, open array
 echo "const logData = [" >> logData.js
 
-# echo "Displaying the contents of array mapped from csv file:"
+# Add all objects to the array in the js-file
 index=0
 for record in "${arr_csv[@]}"
 do
@@ -48,5 +59,6 @@ do
 	((index++))
 done
 
+# Close array with objects
 echo "]" >> logData.js
 
